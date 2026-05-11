@@ -56,8 +56,9 @@ body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; heigh
 @keyframes revealEffect { 0% { opacity: 0; transform: scale(0.8) translateY(50px); filter: brightness(3); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: brightness(1); } }
 @keyframes shakeEffect { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-.img-frame { height: 170px; background: #050505; border: 1px solid #2a2825; display: flex; align-items: center; justify-content: center; background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png'); }
-.img-frame img { max-width: 100%; max-height: 100%; filter: sepia(0.2) contrast(1.1); }
+.img-frame { height: 170px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; border: 1px solid #2a2825; background-color: #121212; background-image: linear-gradient(180deg, rgba(45, 45, 45, 0.2) 0%, rgba(0, 0, 0, 0.4) 100%), url('https://www.transparenttextures.com/patterns/black-paper.png'); background-blend-mode: source-over; }
+.img-frame::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.8) 100%); pointer-events: none; }
+.img-frame img { max-width: 90%; max-height: 80%; z-index: 2; filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.9)); }
 
 .w-name { margin: 15px 0; color: var(--gold); font-size: 1.1rem; min-height: 3rem; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--border); padding-top: 15px; text-transform: uppercase; }
 
