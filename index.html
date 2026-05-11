@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUNT LOADOUT GENERATOR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Special+Elite&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="vignette"></div>
+    <div class="noise"></div>
+
+    <div id="notification-container"></div>
+
+    <div class="main-container">
+        <header>
+            <div class="divider"></div>
+            <div class="logo-container">
+                <img src="hunt-logo.png" alt="Hunt Showdown 1896" class="main-logo">
+            </div>
+            <p class="subtitle">LOADOUT GENERATOR</p>
+            <div class="divider"></div>
+        </header>
+
+        <section class="configuration">
+            <label class="trait-toggle">
+                <input type="checkbox" id="quartermaster" onchange="syncFilters()">
+                <div class="trait-card">UMIEJĘTNOŚĆ: KWATERMISTRZ</div>
+            </label>
+
+            <div class="filter-group">
+                <p>DOZWOLONE KOMBINACJE W LOSOWANIU:</p>
+                <div class="filter-grid">
+                    <label class="filter-btn"><input type="checkbox" id="f-LS" checked> <span>DUŻA + MAŁA</span></label>
+                    <label class="filter-btn"><input type="checkbox" id="f-SS" checked> <span>ŚREDNIA + ŚREDNIA</span></label>
+                    <label class="filter-btn"><input type="checkbox" id="f-SM" checked> <span>ŚREDNIA + MAŁA</span></label>
+                    <label class="filter-btn"><input type="checkbox" id="f-MM" checked> <span>MAŁA + MAŁA</span></label>
+                    <label class="filter-btn qm-only" id="qm-label">
+                        <input type="checkbox" id="f-LM"> <span>DUŻA + ŚREDNIA</span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="generate-btn" id="roll-btn" onclick="generateLoadout()">GENERUJ WYPOSAŻENIE</button>
+        </section>
+
+        <main id="display" class="results-area">
+            <div class="card placeholder-card">
+                <div class="img-frame"></div>
+                <div class="w-name" style="border: none;">SLOT 1</div>
+                <div class="w-price">-</div>
+            </div>
+            <div class="card placeholder-card">
+                <div class="img-frame"></div>
+                <div class="w-name" style="border: none;">SLOT 2</div>
+                <div class="w-price">-</div>
+            </div>
+        </main>
+
+        <footer>
+            <div id="cost" class="price-summary">0<img src="dollars.png" class="hunt-buck"></div>
+        </footer>
+
+        <div class="debug-panel">
+            <button class="debug-toggle" onclick="document.getElementById('debug-box').classList.toggle('active')">MANIFEST ASSETÓW (.WEBP)</button>
+            <div id="debug-box" class="debug-content">
+                <table>
+                    <thead>
+                        <tr><th>BROŃ</th><th>CENA</th><th>NAZWA PLIKU</th><th>PODGLĄD</th></tr>
+                    </thead>
+                    <tbody id="debug-list"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <a id="msln-sign" class="flex items-center gap-1 group">
+      <span class="default-text">stworzone przez</span>
+      <span class="old">@msln</span>
+    </a>
+
+    <script src="script.js"></script>
+</body>
+</html>
