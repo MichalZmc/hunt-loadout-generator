@@ -97,10 +97,6 @@ function getWeaponSet(type) {
 }
 
 function generateLoadout() {
-    const btn = document.getElementById('roll-btn');
-    const display = document.getElementById('display');
-    const costDisplay = document.getElementById('cost');
-    
     const pool = [];
     if (document.getElementById('f-LS').checked) pool.push("L+S");
     if (document.getElementById('f-SS').checked) pool.push("S+S");
@@ -113,31 +109,45 @@ function generateLoadout() {
         return; 
     }
 
-    btn.disabled = true;
-    let rollsCount = 0;
-    const maxRolls = 15;
+    const rollSound = document.getElementById('roll-sound');
+    if (rollSound) {
+        rollSound.currentTime = 0;
+        rollSound.play().catch(() => {});
+    }
+
+    const btn = document.getElementById('roll-btn');
+    const display = document.getElementById('display');
+    const costDisplay = document.getElementById('cost');
     
-    const interval = setInterval(() => {
-        const randomType = pool[Math.floor(Math.random() * pool.length)];
-        const [w1, w2] = getWeaponSet(randomType);
+    btn.disabled = true;
 
-        display.innerHTML = render(w1, true) + render(w2, true);
-        costDisplay.style.opacity = "0.3";
-        costDisplay.innerHTML = `${w1.price + w2.price}<img src="dollars.png" class="hunt-buck">`;
+    const startTime = Date.now();
+    const duration = 3000;
 
-        rollsCount++;
-        if (rollsCount >= maxRolls) {
-            clearInterval(interval);
-            
+    function tick() {
+        const elapsed = Date.now() - startTime;
+        const progress = elapsed / duration;
+
+        if (progress < 1) {
+            const tempType = pool[Math.floor(Math.random() * pool.length)];
+            const [tw1, tw2] = getWeaponSet(tempType);
+
+            display.innerHTML = render(tw1, true) + render(tw2, true);
+            costDisplay.innerHTML = `${tw1.price + tw2.price}<img src="dollars.png" class="hunt-buck">`;
+
+            const nextDelay = 40 + (Math.pow(progress, 2) * 360);
+            setTimeout(tick, nextDelay);
+        } else {
             const finalType = pool[Math.floor(Math.random() * pool.length)];
             const [fw1, fw2] = getWeaponSet(finalType);
             
-            display.innerHTML = render(fw1) + render(fw2);
-            costDisplay.style.opacity = "1";
+            display.innerHTML = render(fw1, false) + render(fw2, false);
             costDisplay.innerHTML = `${fw1.price + fw2.price}<img src="dollars.png" class="hunt-buck">`;
             btn.disabled = false;
         }
-    }, 80);
+    }
+
+    tick();
 }
 
 window.onload = function() {
